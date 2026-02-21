@@ -1,0 +1,23 @@
+# Use the official Python image
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    libpq-dev gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements from CURRENT folder (backend)
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy Django project from CURRENT folder (backend)
+COPY . /app/
+
+RUN mkdir -p /app/staticfiles /app/media /app/logs
+
+# (For dev, you usually SKIP collectstatic)
+# RUN python manage.py collectstatic --noinput || true

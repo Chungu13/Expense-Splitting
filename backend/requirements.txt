@@ -1,0 +1,14 @@
+django
+graphene-django  # For building GraphQL APIs with Django
+djangorestframework  # For building RESTful APIs with Django
+psycopg2-binary  # Connects Django to PostgreSQL
+Pillow # Required for ImageField
+django-filter  # For filtering querysets in Django REST Framework
+PyJWT # For handling JW
+
+# For Production
+gunicorn  # WSGI HTTP server for running Django applications
+django-cors-headers # For handling Cross-Origin Resource Sharing
+whitenoise # For serving static files
+dj-database-url # For connecting to PostgreSQL
+python-dotenv # For handling environment variables
