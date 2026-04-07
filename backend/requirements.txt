@@ -4,7 +4,10 @@ djangorestframework  # For building RESTful APIs with Django
 psycopg2-binary  # Connects Django to PostgreSQL
 Pillow # Required for ImageField
 django-filter  # For filtering querysets in Django REST Framework
-PyJWT # For handling JW
+django-graphql-jwt # JWT for Graphene
+google-auth # Google token verification
+PyJWT # For handling JWTs
+requests # For social auth handling
 
 # For Production
 gunicorn  # WSGI HTTP server for running Django applications

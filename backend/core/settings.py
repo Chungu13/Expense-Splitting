@@ -100,6 +100,11 @@ DATABASES = {
         "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -143,8 +148,34 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Graphene Configuration
 GRAPHENE = {
-    'SCHEMA': 'core.schema.schema'
+    'SCHEMA': 'core.schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
 }
+
+# JWT Cookie Configuration for Security
+GRAPHQL_JWT = {
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
+    'JWT_REUSE_REFRESH_TOKENS': True,
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    
+    # Cookie-based auth settings
+    'JWT_COOKIE_NAME': 'smartsplit-auth',
+    'JWT_COOKIE_HTTPONLY': True,
+    'JWT_COOKIE_SECURE': not DEBUG, # Only True in Production (HTTPS)
+    'JWT_COOKIE_SAMESITE': 'Lax',
+}
+
+# Authentication Backends for Graphene JWT
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Google OAuth Config (Replace with your actual keys!)
+GOOGLE_OAUTH_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID", "YOUR-CLIENT-ID-HERE")
 
 # CORS Configuration (Allow all for development)
 CORS_ALLOW_ALL_ORIGINS = True
