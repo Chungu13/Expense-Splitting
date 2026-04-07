@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,9 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Third-party Apps
+    'graphene_django',
+    'corsheaders',
+    
+    # Internal Apps
+    'users.apps.UsersConfig',
+    'groups.apps.GroupsConfig',
+    'expenses.apps.ExpensesConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # Put this as high as possible
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,11 +89,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 DATABASES = {
     "default": {
@@ -134,3 +140,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Graphene Configuration
+GRAPHENE = {
+    'SCHEMA': 'core.schema.schema'
+}
+
+# CORS Configuration (Allow all for development)
+CORS_ALLOW_ALL_ORIGINS = True
